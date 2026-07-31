@@ -1,0 +1,42 @@
+title: Eastern Bluegrass Reviews
+description: Kentucky-based automotive and powersports news, first looks, comparisons, and honest real-world reviews.
+url: https://www.easternbluegrassreviews.com
+baseurl: ""
+timezone: America/New_York
+permalink: /articles/:title/
+markdown: kramdown
+future: false
+
+collections:
+  reviews:
+    output: true
+    permalink: /reviews/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      author: Eastern Bluegrass Reviews
+  - scope:
+      path: ""
+      type: reviews
+    values:
+      layout: review
+      author: Eastern Bluegrass Reviews
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+feed:
+  path: feed.xml
+
+exclude:
+  - README.md
+  - README-PUBLISHING.md
+  - Gemfile
+  - Gemfile.lock
+  - netlify.toml
