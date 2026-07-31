@@ -1,0 +1,82 @@
+---
+layout: default
+---
+<section class="article-hero review-hero"><div class="container">
+  <div class="meta">Vehicle Review · {{ page.date | date: '%B %-d, %Y' }}</div>
+  <h1>{% if page.model_year %}{{ page.model_year }} {% endif %}{% if page.make %}{{ page.make }} {% endif %}{{ page.model }}{% if page.trim %} {{ page.trim }}{% endif %}</h1>
+  {% if page.summary %}<p>{{ page.summary }}</p>{% endif %}
+</div></section>
+
+<article class="article-shell review-shell">
+  <div class="review-overview">
+    {% if page.featured_image %}<img class="review-main-image" src="{{ page.featured_image | relative_url }}" alt="{{ page.image_alt | default: page.title | escape }}">{% endif %}
+    <div class="overall-score-card">
+      <span>Overall Score</span>
+      <strong>{{ page.overall_score | default: 'N/R' }}</strong>
+      {% if page.overall_score %}<small>out of 10</small>{% endif %}
+      {% if page.msrp %}<p>MSRP: {{ page.msrp }}</p>{% endif %}
+    </div>
+  </div>
+
+  {% if page.summary %}<p class="lead">{{ page.summary }}</p>{% endif %}
+
+  <div class="review-score-grid">
+    {% assign review_scores = "Exterior,exterior_score|Interior,interior_score|Performance,performance_score|Ride Quality,ride_score|Technology,technology_score|Fuel Economy,fuel_economy_score|Towing,towing_score|Off-Road,offroad_score|Value,value_score" | split: "|" %}
+    {% for item in review_scores %}
+      {% assign pieces = item | split: "," %}
+      {% assign score_key = pieces[1] %}
+      {% assign score_value = page[score_key] %}
+      {% if score_value %}<div class="review-score"><span>{{ pieces[0] }}</span><strong>{{ score_value }}</strong><small>/10</small></div>{% endif %}
+    {% endfor %}
+  </div>
+
+  {% if page.pros or page.cons %}
+  <div class="pros-cons">
+    <section><h2>Pros</h2><ul>{% for item in page.pros %}<li>{{ item }}</li>{% endfor %}</ul></section>
+    <section><h2>Cons</h2><ul>{% for item in page.cons %}<li>{{ item }}</li>{% endfor %}</ul></section>
+  </div>
+  {% endif %}
+
+  {% if page.exterior %}<section><h2>Exterior</h2>{{ page.exterior | markdownify }}</section>{% endif %}
+  {% if page.interior %}<section><h2>Interior</h2>{{ page.interior | markdownify }}</section>{% endif %}
+  {% if page.performance %}<section><h2>Performance</h2>{{ page.performance | markdownify }}</section>{% endif %}
+  {% if page.ride_quality %}<section><h2>Ride Quality</h2>{{ page.ride_quality | markdownify }}</section>{% endif %}
+  {% if page.technology %}<section><h2>Technology</h2>{{ page.technology | markdownify }}</section>{% endif %}
+  {% if page.fuel_economy %}<section><h2>Fuel Economy</h2>{{ page.fuel_economy | markdownify }}</section>{% endif %}
+  {% if page.towing %}<section><h2>Towing</h2>{{ page.towing | markdownify }}</section>{% endif %}
+  {% if page.offroad %}<section><h2>Off-Road</h2>{{ page.offroad | markdownify }}</section>{% endif %}
+  {% if page.value %}<section><h2>Value</h2>{{ page.value | markdownify }}</section>{% endif %}
+
+  <div class="article-content">{{ content }}</div>
+
+  {% if page.specifications %}
+  <section><h2>Specifications</h2><div class="spec-table">{% for spec in page.specifications %}<div><span>{{ spec.label }}</span><strong>{{ spec.value }}</strong></div>{% endfor %}</div></section>
+  {% endif %}
+
+  {% if page.gallery %}
+  <section><h2>Gallery</h2><div class="review-gallery">{% for image in page.gallery %}<img src="{{ image | relative_url }}" alt="{{ page.title | escape }} gallery image" loading="lazy">{% endfor %}</div></section>
+  {% endif %}
+
+  {% if page.youtube_embed %}<section><h2>Video</h2><div class="video-frame"><iframe src="{{ page.youtube_embed }}" title="{{ page.title }} video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></section>{% endif %}
+
+  {% if page.competitors %}<section><h2>Competitors</h2><div class="tag-list">{% for item in page.competitors %}<span>{{ item }}</span>{% endfor %}</div></section>{% endif %}
+  {% if page.verdict %}<section class="verdict"><h2>Verdict</h2>{{ page.verdict | markdownify }}</section>{% endif %}
+
+  <div class="share-row">
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url | url_encode }}" target="_blank" rel="noopener">Share on Facebook</a>
+    <a href="#" data-copy-link>Copy review link</a>
+  </div>
+</article>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Review",
+  "name": {{ page.title | jsonify }},
+  "description": {{ page.summary | default: site.description | jsonify }},
+  "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
+  "author": {"@type": "Organization", "name": {{ page.author | default: site.title | jsonify }}},
+  "itemReviewed": {"@type": "Vehicle", "name": {{ page.title | jsonify }}, "brand": {"@type": "Brand", "name": {{ page.make | jsonify }}}}{% if page.overall_score %},
+  "reviewRating": {"@type": "Rating", "ratingValue": {{ page.overall_score | jsonify }}, "bestRating": "10", "worstRating": "0"}{% endif %}
+}
+</script>
