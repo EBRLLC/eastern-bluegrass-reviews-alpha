@@ -1,26 +1,34 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Eastern Bluegrass Reviews | Honest Automotive & Powersports Coverage</title>
-<meta name="description" content="Kentucky-based automotive and powersports news, first looks, walkarounds, comparisons, and honest real-world reviews.">
-<meta property="og:title" content="Eastern Bluegrass Reviews"><meta property="og:description" content="Everything that moves. Honestly reviewed.">
-<meta property="og:image" content="https://easternbluegrassreviews.com/assets/images/ebr-cover.png"><meta property="og:type" content="website">
-<link rel="stylesheet" href="/assets/css/styles.css"></head><body>
-<header class="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="/"><img src="/assets/images/ebr-logo.png" alt="Eastern Bluegrass Reviews logo">
-      <span>EASTERN BLUEGRASS REVIEWS<small>EVERYTHING THAT MOVES</small></span></a>
-    <nav class="nav"><a href="/#latest">Latest</a><a href="/#reviews">Reviews</a><a href="/#categories">Categories</a><a href="/about.html">About</a></nav>
-    <div class="header-actions"><button id="themeToggle" class="icon-btn" aria-label="Toggle light and dark mode">◐</button></div>
-  </div>
-</header>
-
-<main>
+---
+layout: default
+title: Eastern Bluegrass Reviews
+description: Kentucky-based automotive and powersports news, first looks, comparisons, and honest real-world reviews.
+---
 <section class="hero"><div class="container hero-content"><span class="kicker">Kentucky Automotive & Powersports Media</span>
 <h1>Everything That Moves. Honestly Reviewed.</h1>
 <p>Independent news, first looks, walkarounds, comparisons, and real-world reviews of cars, trucks, motorcycles, ATVs, UTVs, tractors, trailers, boats, RVs, and equipment.</p>
 <a class="btn" href="#latest">Read the latest</a></div></section>
 
+{% assign breaking_posts = site.posts | where: "breaking", true %}
+{% if breaking_posts.size > 0 %}
+<section class="breaking-bar" aria-label="Breaking news"><div class="container breaking-inner"><strong>Breaking News</strong><div class="breaking-links">{% for post in breaking_posts limit: 5 %}<a href="{{ post.url | relative_url }}">{{ post.title }}</a>{% endfor %}</div></div></section>
+{% endif %}
+
 <section class="section" id="latest"><div class="container"><div class="section-head"><h2 class="section-title">Featured Stories</h2></div>
+{% assign featured_posts = site.posts | where: "featured", true %}
+{% assign lead_post = featured_posts.first %}
+{% if lead_post %}
+<div class="feature-grid">
+  <article class="card feature-card">
+    <img src="{{ lead_post.featured_image | default: '/assets/images/ebr-cover.png' | relative_url }}" alt="{{ lead_post.image_alt | default: lead_post.title | escape }}">
+    <div class="card-body"><div class="meta">{{ lead_post.category }} · {{ lead_post.date | date: '%B %-d, %Y' }}</div><h2>{{ lead_post.title }}</h2><p>{{ lead_post.summary }}</p><a class="btn" href="{{ lead_post.url | relative_url }}">Read the story</a></div>
+  </article>
+  <div class="side-stack">
+    {% for post in site.posts limit: 4 %}{% unless post.url == lead_post.url %}
+    <a class="side-card" href="{{ post.url | relative_url }}"><div class="meta">{{ post.category | default: 'Article' }}</div><h3>{{ post.title }}</h3><p>{{ post.summary }}</p></a>
+    {% endunless %}{% endfor %}
+  </div>
+</div>
+{% else %}
 <div class="feature-grid"><article class="card feature-card"><img src="/assets/images/ebr-cover.png" alt="Eastern Bluegrass Reviews vehicles and equipment">
 <div class="card-body"><div class="meta">Featured · Editorial</div><h2>Welcome to Eastern Bluegrass Reviews</h2>
 <p>Why we built a Kentucky-based publication focused on honest vehicle and equipment coverage.</p>
@@ -29,17 +37,36 @@
 <a class="side-card" href="/articles/how-we-review-vehicles.html"><div class="meta">Review Process</div><h3>How Eastern Bluegrass Reviews evaluates a vehicle</h3><p>Our practical eight-point format for clear, consistent reviews.</p></a>
 <a class="side-card" href="/articles/facebook-to-website-strategy.html"><div class="meta">Behind the Brand</div><h3>Why our Facebook posts are getting shorter</h3><p>The quick summary belongs on social media. The full story belongs here.</p></a>
 <a class="side-card" href="/articles/what-matters-in-a-first-look.html"><div class="meta">First Looks</div><h3>What we inspect during a dealership walkaround</h3><p>The details brochures and press photos often miss.</p></a>
-</div></div></div></section>
+</div></div>
+{% endif %}
+</div></section>
 
 <section class="section" id="reviews"><div class="container"><div class="section-head"><h2 class="section-title">Latest Articles</h2>
-<div class="search-wrap"><input id="articleSearch" class="search-input" type="search" placeholder="Search articles..." aria-label="Search articles"></div></div>
-<div class="filter-row"><button class="filter-btn active" data-filter="all">All</button><button class="filter-btn" data-filter="news">News</button>
-<button class="filter-btn" data-filter="reviews">Reviews</button><button class="filter-btn" data-filter="powersports">Powersports</button><button class="filter-btn" data-filter="equipment">Equipment</button></div>
+<div class="search-wrap"><input id="articleSearch" class="search-input" type="search" placeholder="Search makes, models, categories, and articles..." aria-label="Search articles"></div></div>
+<div class="filter-row"><button class="filter-btn active" data-filter="all">All</button><button class="filter-btn" data-filter="news">News</button><button class="filter-btn" data-filter="reviews">Reviews</button><button class="filter-btn" data-filter="powersports">Powersports</button><button class="filter-btn" data-filter="equipment">Equipment</button></div>
 <div class="article-grid">
-<article class="card article-card" data-article-card data-category="reviews" data-search="how we review vehicles scoring performance comfort value"><img src="/assets/images/ebr-cover.png" alt=""><div class="card-body"><div class="meta">Reviews · 4 minute read</div><h3>How We Review Vehicles</h3><p>A consistent system covering performance, comfort, quality, utility, technology, practicality, and value.</p><a class="read-more" href="/articles/how-we-review-vehicles.html">Read article →</a></div></article>
-<article class="card article-card" data-article-card data-category="news" data-search="facebook short posts website traffic article strategy"><img src="/assets/images/ebr-cover.png" alt=""><div class="card-body"><div class="meta">Newsroom · 3 minute read</div><h3>Why Our Facebook Posts Are Getting Shorter</h3><p>Better headlines, cleaner teasers, and a direct path to the full story.</p><a class="read-more" href="/articles/facebook-to-website-strategy.html">Read article →</a></div></article>
-<article class="card article-card" data-article-card data-category="equipment" data-search="dealership first look walkaround inspection truck suv equipment"><img src="/assets/images/ebr-cover.png" alt=""><div class="card-body"><div class="meta">First Look · 5 minute read</div><h3>What Matters During a First Look</h3><p>Interior space, controls, visibility, utility, quality, service access, and buyer value.</p><a class="read-more" href="/articles/what-matters-in-a-first-look.html">Read article →</a></div></article>
+{% if site.posts.size > 0 %}
+  {% for post in site.posts limit: 12 %}
+  {% assign filter_category = post.category | downcase %}
+  {% if filter_category contains 'review' %}{% assign filter_category = 'reviews' %}{% elsif filter_category contains 'power' or filter_category contains 'motorcycle' or filter_category contains 'sxs' %}{% assign filter_category = 'powersports' %}{% elsif filter_category contains 'equipment' or filter_category contains 'boat' %}{% assign filter_category = 'equipment' %}{% else %}{% assign filter_category = 'news' %}{% endif %}
+  <article class="card article-card" data-article-card data-category="{{ filter_category }}" data-search="{{ post.title | escape }} {{ post.category | escape }} {{ post.make | escape }} {{ post.model | escape }} {{ post.model_year }} {{ post.tags | join: ' ' | escape }}">
+    <img src="{{ post.featured_image | default: '/assets/images/ebr-cover.png' | relative_url }}" alt="{{ post.image_alt | default: post.title | escape }}">
+    <div class="card-body"><div class="meta">{{ post.category | default: 'Article' }} · {{ post.date | date: '%B %-d, %Y' }}</div><h3>{{ post.title }}</h3><p>{{ post.summary }}</p><a class="read-more" href="{{ post.url | relative_url }}">Read article →</a></div>
+  </article>
+  {% endfor %}
+{% else %}
+  <article class="card article-card" data-article-card data-category="reviews" data-search="how we review vehicles scoring performance comfort value"><img src="/assets/images/ebr-cover.png" alt=""><div class="card-body"><div class="meta">Reviews · 4 minute read</div><h3>How We Review Vehicles</h3><p>A consistent system covering performance, comfort, quality, utility, technology, practicality, and value.</p><a class="read-more" href="/articles/how-we-review-vehicles.html">Read article →</a></div></article>
+  <article class="card article-card" data-article-card data-category="news" data-search="facebook short posts website traffic article strategy"><img src="/assets/images/ebr-cover.png" alt=""><div class="card-body"><div class="meta">Newsroom · 3 minute read</div><h3>Why Our Facebook Posts Are Getting Shorter</h3><p>Better headlines, cleaner teasers, and a direct path to the full story.</p><a class="read-more" href="/articles/facebook-to-website-strategy.html">Read article →</a></div></article>
+  <article class="card article-card" data-article-card data-category="equipment" data-search="dealership first look walkaround inspection truck suv equipment"><img src="/assets/images/ebr-cover.png" alt=""><div class="card-body"><div class="meta">First Look · 5 minute read</div><h3>What Matters During a First Look</h3><p>Interior space, controls, visibility, utility, quality, service access, and buyer value.</p><a class="read-more" href="/articles/what-matters-in-a-first-look.html">Read article →</a></div></article>
+{% endif %}
 </div></div></section>
+
+{% assign sorted_reviews = site.reviews | sort: 'date' | reverse %}
+{% if sorted_reviews.size > 0 %}
+<section class="section review-list-section"><div class="container"><div class="section-head"><h2 class="section-title">Vehicle Reviews</h2></div><div class="article-grid">
+{% for review in sorted_reviews limit: 6 %}<article class="card article-card"><div class="review-card-image"><img src="{{ review.featured_image | default: '/assets/images/ebr-cover.png' | relative_url }}" alt="{{ review.image_alt | default: review.title | escape }}"><span class="card-score">{{ review.overall_score }}/10</span></div><div class="card-body"><div class="meta">{{ review.model_year }} {{ review.make }} {{ review.model }}</div><h3>{{ review.title }}</h3><p>{{ review.summary }}</p><a class="read-more" href="{{ review.url | relative_url }}">Read review →</a></div></article>{% endfor %}
+</div></div></section>
+{% endif %}
 
 <section class="section" id="categories"><div class="container"><h2 class="section-title">Coverage Categories</h2>
 <div class="category-grid"><div class="category-box"><h3>Cars & SUVs</h3><p>Family vehicles, commuters, crossovers, and performance models.</p></div>
@@ -50,9 +77,3 @@
 <section class="section"><div class="container"><div class="newsletter"><div><h2>Have a vehicle or machine we should cover?</h2>
 <p>Dealerships, manufacturers, owners, and local businesses can contact Eastern Bluegrass Reviews for media coverage.</p></div>
 <a class="btn" href="mailto:media@easternbluegrassreviews.com">Contact the newsroom</a></div></div></section>
-</main>
-<footer class="site-footer"><div class="container footer-inner">
-<div>© <span id="year"></span> Eastern Bluegrass Reviews</div>
-<div>Cars · Trucks · Powersports · Equipment · Boats · Trailers</div>
-</div></footer><script src="/assets/js/site.js"></script>
-</body></html>

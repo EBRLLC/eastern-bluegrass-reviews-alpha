@@ -1,0 +1,125 @@
+backend:
+  name: git-gateway
+  branch: main
+
+publish_mode: simple
+site_url: https://www.easternbluegrassreviews.com
+display_url: https://www.easternbluegrassreviews.com
+logo_url: https://www.easternbluegrassreviews.com/assets/images/ebr-logo.png
+media_folder: assets/uploads
+public_folder: /assets/uploads
+
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: "-"
+
+collections:
+  - name: blog
+    label: Blog Posts
+    label_singular: Blog Post
+    folder: _posts
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    preview_path: "articles/{{slug}}"
+    summary: "{{title}} — {{date}}"
+    fields:
+      - {label: Layout, name: layout, widget: hidden, default: post}
+      - {label: Article Title, name: title, widget: string}
+      - {label: Publish Date and Time, name: date, widget: datetime, date_format: "YYYY-MM-DD", time_format: "h:mm A", format: "YYYY-MM-DD HH:mm:ss Z"}
+      - {label: Author, name: author, widget: string, default: "Zach — Eastern Bluegrass Reviews"}
+      - label: Category
+        name: category
+        widget: select
+        options:
+          - News
+          - Reviews
+          - First Looks
+          - Buying Guides
+          - Mopar Monday
+          - Powersports
+          - Motorcycles
+          - SXS
+          - Equipment
+          - Boats
+          - Editorial
+      - {label: Vehicle Year, name: model_year, widget: number, value_type: int, required: false, min: 1900, max: 2100}
+      - {label: Manufacturer or Make, name: make, widget: string, required: false}
+      - {label: Model, name: model, widget: string, required: false}
+      - {label: Short Summary, name: summary, widget: text, hint: "One or two sentences used on the homepage and social previews."}
+      - {label: Featured Image, name: featured_image, widget: image}
+      - {label: Image Description, name: image_alt, widget: string, hint: "Describe the photograph for accessibility and search engines."}
+      - {label: Feature on Homepage, name: featured, widget: boolean, default: false, required: false}
+      - {label: Breaking News, name: breaking, widget: boolean, default: false, required: false}
+      - {label: YouTube Embed URL, name: youtube_embed, widget: string, required: false, hint: "Use the YouTube embed address, such as https://www.youtube.com/embed/VIDEO-ID"}
+      - {label: Search Tags, name: tags, widget: list, required: false, hint: "Add useful terms such as truck, towing, family SUV, Jeep, or Toyota."}
+      - {label: SEO Title, name: seo_title, widget: string, required: false, hint: "Leave blank to use the article title."}
+      - {label: SEO Description, name: seo_description, widget: text, required: false, hint: "Leave blank to use the short summary."}
+      - {label: Article, name: body, widget: markdown}
+
+  - name: reviews
+    label: Vehicle Reviews
+    label_singular: Vehicle Review
+    folder: _reviews
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{slug}}"
+    preview_path: "reviews/{{slug}}"
+    summary: "{{title}} — Score: {{overall_score}}"
+    fields:
+      - {label: Layout, name: layout, widget: hidden, default: review}
+      - {label: Review Title, name: title, widget: string, hint: "Example: 2027 Toyota Sequoia Trailhunter Review"}
+      - {label: Review Date, name: date, widget: datetime, date_format: "YYYY-MM-DD", time_format: "h:mm A", format: "YYYY-MM-DD HH:mm:ss Z"}
+      - {label: Author, name: author, widget: string, default: "Zach — Eastern Bluegrass Reviews"}
+      - {label: Model Year, name: model_year, widget: number, value_type: int, min: 1900, max: 2100}
+      - {label: Make, name: make, widget: string}
+      - {label: Model, name: model, widget: string}
+      - {label: Trim, name: trim, widget: string, required: false}
+      - {label: MSRP, name: msrp, widget: string, required: false, hint: "Example: $54,995 as tested"}
+      - {label: Review Summary, name: summary, widget: text}
+      - {label: Main Vehicle Image, name: featured_image, widget: image}
+      - {label: Image Description, name: image_alt, widget: string}
+      - {label: Overall Score, name: overall_score, widget: number, value_type: float, min: 0, max: 10, step: 0.1}
+      - {label: Exterior Score, name: exterior_score, widget: number, value_type: float, min: 0, max: 10, step: 0.1, required: false}
+      - {label: Interior Score, name: interior_score, widget: number, value_type: float, min: 0, max: 10, step: 0.1, required: false}
+      - {label: Performance Score, name: performance_score, widget: number, value_type: float, min: 0, max: 10, step: 0.1, required: false}
+      - {label: Ride Quality Score, name: ride_score, widget: number, value_type: float, min: 0, max: 10, step: 0.1, required: false}
+      - {label: Technology Score, name: technology_score, widget: number, value_type: float, min: 0, max: 10, step: 0.1, required: false}
+      - {label: Fuel Economy Score, name: fuel_economy_score, widget: number, value_type: float, min: 0, max: 10, step: 0.1, required: false}
+      - {label: Towing Score, name: towing_score, widget: number, value_type: float, min: 0, max: 10, step: 0.1, required: false}
+      - {label: Off-Road Score, name: offroad_score, widget: number, value_type: float, min: 0, max: 10, step: 0.1, required: false}
+      - {label: Value Score, name: value_score, widget: number, value_type: float, min: 0, max: 10, step: 0.1, required: false}
+      - {label: Pros, name: pros, widget: list, required: false}
+      - {label: Cons, name: cons, widget: list, required: false}
+      - {label: Exterior, name: exterior, widget: markdown, required: false}
+      - {label: Interior, name: interior, widget: markdown, required: false}
+      - {label: Performance, name: performance, widget: markdown, required: false}
+      - {label: Ride Quality, name: ride_quality, widget: markdown, required: false}
+      - {label: Technology, name: technology, widget: markdown, required: false}
+      - {label: Fuel Economy, name: fuel_economy, widget: markdown, required: false}
+      - {label: Towing, name: towing, widget: markdown, required: false}
+      - {label: Off-Road, name: offroad, widget: markdown, required: false}
+      - {label: Value, name: value, widget: markdown, required: false}
+      - label: Specifications
+        name: specifications
+        widget: list
+        required: false
+        fields:
+          - {label: Specification, name: label, widget: string}
+          - {label: Value, name: value, widget: string}
+      - label: Gallery
+        name: gallery
+        widget: list
+        required: false
+        field: {label: Image, name: image, widget: image}
+      - {label: YouTube Embed URL, name: youtube_embed, widget: string, required: false}
+      - {label: Competitors, name: competitors, widget: list, required: false}
+      - {label: Verdict, name: verdict, widget: markdown}
+      - {label: Additional Review Notes, name: body, widget: markdown, required: false}
+      - {label: SEO Title, name: seo_title, widget: string, required: false}
+      - {label: SEO Description, name: seo_description, widget: text, required: false}
