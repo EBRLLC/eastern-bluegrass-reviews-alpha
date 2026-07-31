@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  {% assign page_title = page.seo_title | default: page.title | default: site.title %}
+  {% assign page_description = page.seo_description | default: page.summary | default: page.description | default: site.description %}
+  <title>{{ page_title | escape }}{% unless page_title contains site.title %} | {{ site.title }}{% endunless %}</title>
+  <meta name="description" content="{{ page_description | strip_html | strip_newlines | escape }}">
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  <meta property="og:title" content="{{ page_title | escape }}">
+  <meta property="og:description" content="{{ page_description | strip_html | strip_newlines | escape }}">
+  <meta property="og:image" content="{{ page.featured_image | default: '/assets/images/ebr-cover.png' | absolute_url }}">
+  <meta property="og:type" content="{% if page.layout == 'post' or page.layout == 'review' %}article{% else %}website{% endif %}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | absolute_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/styles.css' | relative_url }}">
+  {% seo %}
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="{{ '/' | relative_url }}">
+      <img src="{{ '/assets/images/ebr-logo.png' | relative_url }}" alt="Eastern Bluegrass Reviews logo">
+      <span>EASTERN BLUEGRASS REVIEWS<small>EVERYTHING THAT MOVES</small></span>
+    </a>
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="{{ '/#latest' | relative_url }}">Latest</a>
+      <a href="{{ '/#reviews' | relative_url }}">Reviews</a>
+      <a href="{{ '/#categories' | relative_url }}">Categories</a>
+      <a href="{{ '/about.html' | relative_url }}">About</a>
+      <a href="{{ '/admin/' | relative_url }}">Publisher Login</a>
+    </nav>
+    <div class="header-actions"><button id="themeToggle" class="icon-btn" aria-label="Toggle light and dark mode">◐</button></div>
+  </div>
+</header>
+
+<main>{{ content }}</main>
+
+<footer class="site-footer"><div class="container footer-inner">
+  <div>© <span id="year"></span> Eastern Bluegrass Reviews</div>
+  <div>Cars · Trucks · Powersports · Equipment · Boats · Trailers</div>
+</div></footer>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on('init', function(user) {
+      if (!user && window.location.hash.indexOf('invitation_token') > -1) {
+        window.netlifyIdentity.open('signup');
+      }
+    });
+    window.netlifyIdentity.on('login', function() {
+      window.location.href = '/admin/';
+    });
+  }
+</script>
+<script src="{{ '/assets/js/site.js' | relative_url }}"></script>
+</body>
+</html>
