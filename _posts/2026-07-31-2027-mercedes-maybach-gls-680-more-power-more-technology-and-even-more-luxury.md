@@ -2,7 +2,7 @@
 layout: post
 title: "2027 Mercedes-Maybach GLS 680: More Power, More Technology and Even More
   Luxury"
-date: 2026-07-31 10:00:00 -04:00
+date: 2026-07-31 01:43:00 -04:00
 author: " Eastern Bluegrass Reviews"
 category: First Looks
 model_year: 2027
