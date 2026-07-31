@@ -14,7 +14,7 @@ summary: The 2027 Mercedes-Maybach GLS 680 combines a 603-horsepower V8 with
   pricing.
 featured_image: /assets/uploads/756833162_122111207085392881_3833798764907602690_n-1-.jpg
 image_alt: 2027 Mercedes-Maybach GLS 680
-featured: true
+featured: false
 breaking: false
 ---
 # 2027 Mercedes-Maybach GLS 680: More Power, More Technology and Even More Luxury
