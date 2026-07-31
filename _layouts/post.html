@@ -1,0 +1,49 @@
+---
+layout: default
+---
+<section class="article-hero"><div class="container">
+  <div class="meta">{{ page.category | default: 'Article' }} · {{ page.date | date: '%B %-d, %Y' }}</div>
+  <h1>{{ page.title }}</h1>
+  {% if page.summary %}<p>{{ page.summary }}</p>{% endif %}
+</div></section>
+
+<article class="article-shell">
+  {% if page.featured_image %}
+    <figure class="article-feature-image">
+      <img src="{{ page.featured_image | relative_url }}" alt="{{ page.image_alt | default: page.title | escape }}">
+    </figure>
+  {% endif %}
+
+  {% if page.summary %}<p class="lead">{{ page.summary }}</p>{% endif %}
+
+  <div class="article-content">{{ content }}</div>
+
+  {% if page.youtube_embed %}
+    <section class="article-video" aria-label="Video">
+      <h2>Video</h2>
+      <div class="video-frame"><iframe src="{{ page.youtube_embed }}" title="{{ page.title }} video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+    </section>
+  {% endif %}
+
+  {% if page.tags %}<div class="tag-list">{% for tag in page.tags %}<span>{{ tag }}</span>{% endfor %}</div>{% endif %}
+
+  <div class="share-row">
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url | url_encode }}" target="_blank" rel="noopener">Share on Facebook</a>
+    <a href="#" data-copy-link>Copy article link</a>
+  </div>
+</article>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "headline": {{ page.title | jsonify }},
+  "description": {{ page.summary | default: site.description | jsonify }},
+  "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
+  "dateModified": {{ page.last_modified_at | default: page.date | date_to_xmlschema | jsonify }},
+  "author": {"@type": "Organization", "name": {{ page.author | default: site.title | jsonify }}},
+  "publisher": {"@type": "Organization", "name": {{ site.title | jsonify }}, "logo": {"@type": "ImageObject", "url": {{ '/assets/images/ebr-logo.png' | absolute_url | jsonify }}}},
+  "mainEntityOfPage": {{ page.url | absolute_url | jsonify }},
+  "image": [{{ page.featured_image | default: '/assets/images/ebr-cover.png' | absolute_url | jsonify }}]
+}
+</script>
