@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "The Muscle Truck Is Back: First Look at the 777-HP 2027 Ram 1500 Rumble Bee"
-date: 2026-08-03 09:59:00 -04:00
+date: 2026-08-01 22:02:00 -04:00
 author: Eastern Bluegrass Reviews
 category: Mopar Monday
 model_year: 2027
